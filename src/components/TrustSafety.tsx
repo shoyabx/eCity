@@ -68,42 +68,42 @@ export default function TrustSafety() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding bg-slate-900 relative overflow-hidden text-white">
+    <section ref={sectionRef} className="section-padding bg-[#fbfbfd] relative overflow-hidden text-[#1d1d1f] border-t border-black/5">
       {/* Background styling */}
-      <div className="absolute inset-0 opacity-20" style={{
-        backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
+      <div className="absolute inset-0 opacity-40 mix-blend-multiply" style={{
+        backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.05) 1px, transparent 0)',
         backgroundSize: '40px 40px'
       }} />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-primary/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-emerald/5 to-transparent blur-3xl pointer-events-none" />
 
       <div className="container-main relative z-10">
         <div className={`text-center mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="section-badge bg-white/10 text-emerald-300 border border-white/10 mb-4 mx-auto w-fit backdrop-blur-sm">
+          <div className="section-badge apple-glass text-[#0066cc] border border-[#0066cc]/20 mb-4 mx-auto w-fit">
             <FontAwesomeIcon icon={faShieldHalved} className="mr-2" />
             Trust & Safety First
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4">
-            A Secure Network of <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">Trusted Locals</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight">
+            A Secure Network of <span className="text-[#34c759]">Trusted Locals</span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-[#1d1d1f]/60" style={{ textAlign: 'center', margin: '0 auto', width: '100%', maxWidth: '42rem', marginBottom: '40px' }}>
             We've built eCity with safety at its core, so you can focus on finding the best deals and making great connections.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 z-10 relative" style={{ margin: '0 auto', width: '100%', maxWidth: '1152px' }}>
           {trustFeatures.map((feature, i) => (
             <div
               key={feature.title}
-              className={`group bg-slate-800/50 backdrop-blur-md border border-slate-700 rounded-2xl p-6 lg:p-8 hover:bg-slate-800 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-${feature.color.split('-')[1]}/10 ${
+              className={`group apple-glass rounded-2xl hover:bg-white/90 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-black/10 hover:shadow-${feature.color.split('-')[1]}/10 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}
-              style={{ transitionDelay: `${i * 100 + 200}ms` }}
+              style={{ transitionDelay: `${i * 100 + 200}ms`, padding: '32px' }}
             >
-              <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br ${feature.color} text-white shadow-lg`}>
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br ${feature.color} text-white shadow-lg border border-black/10`}>
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-100 group-hover:text-white transition-colors">{feature.title}</h3>
-              <p className="text-slate-400 leading-relaxed text-sm">
+              <h3 className="text-xl font-bold mb-3 text-[#1d1d1f] group-hover:text-[#0066cc] transition-colors">{feature.title}</h3>
+              <p className="text-[#1d1d1f]/60 leading-relaxed text-sm group-hover:text-[#1d1d1f]/80 transition-colors">
                 {feature.description}
               </p>
             </div>

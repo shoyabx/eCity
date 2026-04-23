@@ -32,38 +32,38 @@ export default function Categories() {
   }, []);
 
   return (
-    <section id="categories" ref={sectionRef} className="section-padding bg-slate-50 relative overflow-hidden">
+    <section id="categories" ref={sectionRef} className="section-padding bg-[#fbfbfd] relative overflow-hidden">
       <div className="container-main relative z-10">
         <div className={`text-center mb-14 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="section-badge bg-blue-primary/10 text-blue-primary mb-4 mx-auto w-fit">
-            <span className="w-2 h-2 rounded-full bg-blue-primary animate-pulse" />
+          <div className="section-badge bg-[#0066cc]/10 text-[#0066cc] border border-[#0066cc]/20 mb-4 mx-auto w-fit">
+            <span className="w-2 h-2 rounded-full bg-[#0066cc] animate-pulse" />
             Browse Categories
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
-            Popular <span className="gradient-text">Categories</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1d1d1f] mb-4 tracking-tight">
+            Popular <span className="text-[#0066cc]">Categories</span>
           </h2>
-          <p className="text-lg text-slate-500 max-w-xl mx-auto">
+          <p className="text-lg text-[#1d1d1f]/60" style={{ textAlign: 'center', margin: '0 auto', width: '100%', maxWidth: '36rem', marginBottom: '40px' }}>
             Find help across every daily need — from groceries to home repairs.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6" style={{ margin: '0 auto', width: '100%', maxWidth: '1152px' }}>
           {categories.map((cat, i) => (
             <div
               key={cat.name}
-              className={`group relative bg-white rounded-2xl p-6 border border-slate-100 ${cat.hoverBorder} cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] ${
+              className={`group relative apple-glass rounded-2xl cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,102,204,0.1)] hover:border-black/10 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
-              style={{ transitionDelay: `${i * 60 + 200}ms` }}
+              style={{ transitionDelay: `${i * 60 + 200}ms`, padding: '24px' }}
             >
               {/* Background gradient on hover */}
               <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${cat.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
               
               <div className="relative z-10 text-center">
-                <div className="text-4xl mb-3 group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300">
+                <div className="text-4xl mb-4 group-hover:scale-110 group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-sm text-[#1d1d1f]/80">
                   {cat.icon}
                 </div>
-                <span className="text-sm font-semibold text-slate-700 group-hover:text-slate-900 transition-colors">
+                <span className="text-sm font-semibold text-[#1d1d1f]/60 group-hover:text-[#1d1d1f] transition-colors">
                   {cat.name}
                 </span>
               </div>

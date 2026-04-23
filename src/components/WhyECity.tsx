@@ -73,19 +73,19 @@ export default function WhyECity() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
             Why <span className="gradient-text">eCity</span> Wins
           </h2>
-          <p className="text-lg text-slate-500 max-w-xl mx-auto">
+          <p className="text-lg text-slate-500" style={{ textAlign: 'center', margin: '0 auto', width: '100%', maxWidth: '36rem', marginBottom: '40px' }}>
             Not another app. A people-powered savings network.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 gap-6 lg:gap-8" style={{ margin: '0 auto', width: '100%', maxWidth: '1024px' }}>
           {features.map((f, i) => (
             <div
               key={f.title}
-              className={`group relative bg-white rounded-2xl p-8 border border-slate-100 hover:border-slate-200 card-hover transition-all duration-700 ${
+              className={`group relative bg-white rounded-2xl border border-slate-100 hover:border-slate-200 card-hover transition-all duration-700 ${
                 visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}
-              style={{ transitionDelay: `${i * 150 + 200}ms` }}
+              style={{ transitionDelay: `${i * 150 + 200}ms`, padding: '32px' }}
             >
               {/* Glow on hover */}
               <div className={`absolute -inset-px rounded-2xl ${f.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`} />
