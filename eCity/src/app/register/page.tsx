@@ -56,7 +56,7 @@ export default function Register() {
 
     try {
       // Create Supabase user with email (username-based email if not provided)
-      const signupEmail = email || `${username.toLowerCase().replace(/\s+/g, '.')}@users.ecity.local`;
+      const signupEmail = email || `${username.toLowerCase().replace(/\s+/g, '.')}@ecity.local`;
       
       const { data, error: signUpError } = await signUpWithProfile(
         signupEmail,

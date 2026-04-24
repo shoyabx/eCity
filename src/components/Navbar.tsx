@@ -1,16 +1,23 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, loading, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSignOut = async () => {
+    await signOut();
+    window.location.href = '/';
+  };
 
   const links = [
     { label: "Home", href: "/" },
@@ -54,18 +61,49 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Buttons */}
+          {/* Buttons - Conditional based on auth */}
           <div className="hidden lg:flex items-center bg-white/80 backdrop-blur-md rounded-full px-2 py-1.5 border border-black/5 shadow-sm" style={{ gap: '12px' }}>
-            <Link
-              href="/login"
-              className={`rounded-full text-sm font-bold transition-all duration-300 text-[#1d1d1f] hover:bg-white hover:shadow-sm`}
-              style={{ padding: '10px 24px', display: 'inline-block', whiteSpace: 'nowrap', minWidth: '120px', textAlign: 'center' }}
-            >
-              Log In
-            </Link>
-            <Link href="/register" className="rounded-full text-sm font-bold bg-[#1d1d1f] text-white hover:bg-black transition-all duration-300 shadow-md" style={{ padding: '10px 24px', display: 'inline-block', whiteSpace: 'nowrap', minWidth: '120px', textAlign: 'center' }}>
-              Join Free
-            </Link>
+            {loading ? (
+              // Loading state
+              <div className="flex items-center gap-3 px-4">
+                <div className="w-8 h-8 rounded-full bg-black/10 animate-pulse" />
+              </div>
+            ) : user ? (
+              // Logged in - Show profile dropdown
+              <div className="flex items-center gap-3 px-2">
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-2 rounded-full text-sm font-bold transition-all duration-300 text-[#1d1d1f] hover:bg-white hover:shadow-sm"
+                  style={{ padding: '8px 16px', display: 'flex', whiteSpace: 'nowrap' }}
+                >
+                  <div className="w-7 h-7 rounded-full bg-[#0066cc] text-white flex items-center justify-center text-xs font-bold">
+                    {user.email?.charAt(0).toUpperCase() || 'U'}
+                  </div>
+                  <span className="max-w-[120px] truncate">{user.email?.split('@')[0]}</span>
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="rounded-full text-sm font-medium transition-all duration-300 text-[#1d1d1f]/60 hover:text-[#ff3b30] hover:bg-red-50"
+                  style={{ padding: '8px 16px', display: 'inline-block', whiteSpace: 'nowrap' }}
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              // Not logged in - Show Login/Join Free
+              <>
+                <Link
+                  href="/login"
+                  className={`rounded-full text-sm font-bold transition-all duration-300 text-[#1d1d1f] hover:bg-white hover:shadow-sm`}
+                  style={{ padding: '10px 24px', display: 'inline-block', whiteSpace: 'nowrap', minWidth: '120px', textAlign: 'center' }}
+                >
+                  Log In
+                </Link>
+                <Link href="/register" className="rounded-full text-sm font-bold bg-[#1d1d1f] text-white hover:bg-black transition-all duration-300 shadow-md" style={{ padding: '10px 24px', display: 'inline-block', whiteSpace: 'nowrap', minWidth: '120px', textAlign: 'center' }}>
+                  Join Free
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile toggle */}
@@ -104,13 +142,41 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          
           <div className="flex gap-3 mt-3 px-4 pb-4">
-            <Link href="/login" className={`flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium transition-all text-[#1d1d1f] bg-black/5 hover:bg-black/10`}>
-              Log In
-            </Link>
-            <Link href="/register" className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium bg-[#1d1d1f] hover:bg-black shadow-[0_4px_14px_rgba(0,0,0,0.15)] text-white">
-              Join Free
-            </Link>
+            {loading ? (
+              <div className="flex-1 h-12 bg-black/5 rounded-xl animate-pulse" />
+            ) : user ? (
+              // Logged in mobile menu
+              <>
+                <Link 
+                  href="/profile" 
+                  onClick={() => setMobileOpen(false)}
+                  className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium bg-[#0066cc] text-white"
+                >
+                  Profile
+                </Link>
+                <button 
+                  onClick={() => {
+                    handleSignOut();
+                    setMobileOpen(false);
+                  }}
+                  className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium text-[#ff3b30] bg-red-50"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              // Not logged in mobile menu
+              <>
+                <Link href="/login" onClick={() => setMobileOpen(false)} className={`flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium transition-all text-[#1d1d1f] bg-black/5 hover:bg-black/10`}>
+                  Log In
+                </Link>
+                <Link href="/register" onClick={() => setMobileOpen(false)} className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium bg-[#1d1d1f] hover:bg-black shadow-[0_4px_14px_rgba(0,0,0,0.15)] text-white">
+                  Join Free
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

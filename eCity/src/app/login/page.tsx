@@ -118,8 +118,8 @@ export default function Login() {
       
       <div className="flex-1 flex items-center justify-center pt-24 pb-12 px-4 relative">
         {/* Background blobs for Apple vibe */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0066cc]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#34c759]/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0066cc]/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#34c759]/5 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="apple-glass rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-black/5 w-full max-w-md relative z-10 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,102,204,0.08)]" style={{ padding: '48px' }}>
           <div className="text-center mb-10">
