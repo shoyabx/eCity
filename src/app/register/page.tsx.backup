@@ -11,6 +11,7 @@ export default function Register() {
   
   const [username, setUsername] = useState("");
   const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -55,7 +56,7 @@ export default function Register() {
 
     try {
       // Create Supabase user with email (username-based email if not provided)
-      const signupEmail = `${username.toLowerCase().replace(/\s+/g, ".")}@users.ecity.local`;
+      const signupEmail = email || `${username.toLowerCase().replace(/\s+/g, '.')}@users.ecity.local`;
       
       const { data, error: signUpError } = await signUpWithProfile(
         signupEmail,
@@ -177,6 +178,19 @@ export default function Register() {
                 disabled={loading}
               />
             </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-[#1d1d1f]/60 mb-2">Email (optional)</label>
+              <input 
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-white border border-black/5 rounded-xl px-4 py-3.5 text-[#1d1d1f] text-lg font-medium focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all shadow-sm"
+                placeholder="you@example.com (optional)"
+                disabled={loading}
+              />
+            </div>
+
             <div>
               <label className="block text-sm font-semibold text-[#1d1d1f]/80 mb-2">Password *</label>
               <input 

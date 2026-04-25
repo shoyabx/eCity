@@ -182,7 +182,7 @@ export default function Register() {
             <div>
               <label className="block text-sm font-semibold text-[#1d1d1f]/60 mb-2">Email (optional)</label>
               <input 
-                type="email"
+                type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-white border border-black/5 rounded-xl px-4 py-3.5 text-[#1d1d1f] text-lg font-medium focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all shadow-sm"

@@ -55,7 +55,7 @@ export default function Register() {
 
     try {
       // Create Supabase user with email (username-based email if not provided)
-      const signupEmail = `${username.toLowerCase().replace(/\s+/g, ".")}@users.ecity.local`;
+      const signupEmail = email || `${username.toLowerCase().replace(/\s+/g, '.')}@users.ecity.local`;
       
       const { data, error: signUpError } = await signUpWithProfile(
         signupEmail,
@@ -177,6 +177,7 @@ export default function Register() {
                 disabled={loading}
               />
             </div>
+
             <div>
               <label className="block text-sm font-semibold text-[#1d1d1f]/80 mb-2">Password *</label>
               <input 
