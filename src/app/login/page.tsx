@@ -138,8 +138,14 @@ export default function Login() {
           )}
 
           {successMessage && (
-            <div className="bg-[#34c759]/10 text-[#34c759] border border-[#34c759]/20 rounded-xl p-3 text-sm font-medium mb-6 text-center">
-              {successMessage}
+            <div className="bg-[#34c759]/10 text-[#34c759] border border-[#34c759]/20 rounded-xl p-3 text-sm font-medium mb-6 text-center relative">
+              <span>{successMessage}</span>
+              <button 
+                onClick={() => setSuccessMessage("")} 
+                className="absolute top-2 right-2 text-[#34c759] hover:text-[#2a9d45] font-bold"
+              >
+                ×
+              </button>
             </div>
           )}
 

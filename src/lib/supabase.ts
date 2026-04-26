@@ -33,8 +33,13 @@ export const signOut = async () => {
 };
 
 export const resetPassword = async (email: string) => {
+  // SSR-safe redirect URL
+  const redirectUrl = typeof window !== 'undefined' 
+    ? `${window.location.origin}/reset-password`
+    : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/reset-password` || 'http://localhost:3000/reset-password';
+
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}/reset-password`,
+    redirectTo: redirectUrl,
   });
   return { data, error };
 };

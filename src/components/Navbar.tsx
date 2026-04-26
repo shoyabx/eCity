@@ -83,6 +83,7 @@ export default function Navbar() {
                 </Link>
                 <button
                   onClick={handleSignOut}
+                  type="button"
                   className="rounded-full text-sm font-medium transition-all duration-300 text-[#1d1d1f]/60 hover:text-[#ff3b30] hover:bg-red-50"
                   style={{ padding: '8px 16px', display: 'inline-block', whiteSpace: 'nowrap' }}
                 >
@@ -161,6 +162,7 @@ export default function Navbar() {
                     handleSignOut();
                     setMobileOpen(false);
                   }}
+                  type="button"
                   className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium text-[#ff3b30] bg-red-50"
                 >
                   Sign Out
