@@ -1,29 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🌆 eCity
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+Save Smarter with Your City
 
-```bash
+Hyperlocal marketplace helping people save money, get trusted help, and earn using local knowledge.
+
+</div>
+
+⸻
+
+🚀 Why eCity?
+
+People overpay daily for repairs, groceries, and local services.
+
+eCity fixes that with trusted local exchange.
+
+* Post a need
+* Receive offers
+* Chat safely
+* Save money / Earn money
+
+⸻
+
+⚡ Core Use Cases
+
+Need	Example
+🛵 Repair	Bike service under ₹1500
+🥬 Grocery	Better market prices
+🧰 Appliance	AC / TV / Fridge repair
+🤝 Utility	Errands / walk partner
+
+⸻
+
+🧠 How It Works
+
+flowchart LR
+A[Post Request] --> B[Offers Arrive]
+B --> C[Chat]
+C --> D[Complete]
+D --> E[Track Savings ₹]
+
+⸻
+
+🛠 Stack
+
+Next.js TypeScript Tailwind Firebase Firestore OTP Auth Vercel
+
+⸻
+
+📈 Why It Can Win (YC Lens)
+
+* Massive urban pain point
+* Clear cost savings ROI
+* India-scale market
+* Strong network effects
+* Repeatable daily use cases
+* Low-cost MVP distribution via SEO + referrals
+
+⸻
+
+🧪 Current Focus
+
+1. Vehicle Repair
+2. Electronics Repair
+3. Groceries
+4. Human Utility
+
+⸻
+
+🤝 Contributors Welcome
+
+We welcome:
+
+* Engineers
+* Growth builders
+* UI/UX designers
+* Marketplace operators
+
+git clone <repo-url>
+npm install
 npm run dev
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+⸻
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+📍 Status
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🟢 MVP Building
+🟡 Testing Demand
+🔵 Scaling Soon
 
-## Learn More
+⸻
 
-To learn more about Next.js, take a look at the following resources:
+<div align="center">
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Build trust. Reduce waste. Save cities money.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</div>
