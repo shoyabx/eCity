@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { supabase } from "@/lib/supabase";
 
 export default function PostNeed() {
   const router = useRouter();
@@ -17,10 +18,30 @@ export default function PostNeed() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Need posted successfully! Verified connectors will contact you soon.");
-    router.push("/");
+    setSubmitting(true);
+
+    const { data: userData } = await supabase.auth.getUser();
+    const userId = userData.user?.id;
+    if (!userId) {
+      setSubmitting(false);
+      router.push('/login');
+      return;
+    }
+
+    await supabase.from('posts').insert({
+      user_id: userId,
+      type: 'need',
+      category: formData.category,
+      title: formData.name,
+      details: formData.details,
+      status: 'open'
+    });
+
+    setSubmitting(false);
+    router.push("/dashboard");
   };
 
   return (
@@ -127,8 +148,8 @@ export default function PostNeed() {
               </label>
             </div>
 
-            <button type="submit" className="w-full btn-primary py-4 text-lg justify-center shadow-[0_10px_20px_rgba(0,102,204,0.2)]">
-              Post My Requirement
+            <button type="submit" disabled={submitting} className="w-full btn-primary py-4 text-lg justify-center shadow-[0_10px_20px_rgba(0,102,204,0.2)] disabled:opacity-60">
+              {submitting ? 'Posting...' : 'Post My Requirement'}
             </button>
           </form>
         </div>

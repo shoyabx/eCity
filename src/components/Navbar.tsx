@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const router = useRouter();
   const { user, loading, signOut } = useAuth();
 
   useEffect(() => {
@@ -16,7 +18,8 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     await signOut();
-    window.location.href = '/';
+    ["ecity_active_user", "ecity_users", "ecity_verified"].forEach((k) => localStorage.removeItem(k));
+    router.replace('/login');
   };
 
   const links = [
@@ -72,7 +75,7 @@ export default function Navbar() {
               // Logged in - Show profile dropdown
               <div className="flex items-center gap-3 px-2">
                 <Link
-                  href="/profile"
+                  href="/dashboard"
                   className="flex items-center gap-2 rounded-full text-sm font-bold transition-all duration-300 text-[#1d1d1f] hover:bg-white hover:shadow-sm"
                   style={{ padding: '8px 16px', display: 'flex', whiteSpace: 'nowrap' }}
                 >
@@ -151,7 +154,7 @@ export default function Navbar() {
               // Logged in mobile menu
               <>
                 <Link 
-                  href="/profile" 
+                  href="/dashboard" 
                   onClick={() => setMobileOpen(false)}
                   className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-medium bg-[#0066cc] text-white"
                 >

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { supabase } from "@/lib/supabase";
 
 export default function OfferHelp() {
   const router = useRouter();
@@ -17,10 +18,30 @@ export default function OfferHelp() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Profile submitted! Verification active. You can start earning once approved.");
-    router.push("/");
+    setSubmitting(true);
+
+    const { data: userData } = await supabase.auth.getUser();
+    const userId = userData.user?.id;
+    if (!userId) {
+      setSubmitting(false);
+      router.push('/login');
+      return;
+    }
+
+    await supabase.from('posts').insert({
+      user_id: userId,
+      type: 'offer',
+      category: formData.type,
+      title: formData.name,
+      details: formData.servicesOffered,
+      status: 'open'
+    });
+
+    setSubmitting(false);
+    router.push("/dashboard");
   };
 
   return (
@@ -107,8 +128,8 @@ export default function OfferHelp() {
               </p>
             </div>
 
-            <button type="submit" className="w-full btn-primary bg-[#34c759] hover:bg-[#30d158] border-transparent text-white py-4 text-lg justify-center shadow-[0_10px_20px_rgba(52,199,89,0.3)]">
-              Submit Connector Application
+            <button type="submit" disabled={submitting} className="w-full btn-primary bg-[#34c759] hover:bg-[#30d158] border-transparent text-white py-4 text-lg justify-center shadow-[0_10px_20px_rgba(52,199,89,0.3)] disabled:opacity-60">
+              {submitting ? 'Submitting...' : 'Submit Connector Application'}
             </button>
           </form>
         </div>
