@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
+import { getFirebaseAuth } from "@/lib/firebase";
 
 type Summary = {
   profile: { username: string; mobile: string } | null;
@@ -19,16 +20,15 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const load = async () => {
-      const res = await fetch('/api/dashboard/summary');
+      const uid = getFirebaseAuth().currentUser?.uid;
+      if (!uid) return;
+
+      const res = await fetch(`/api/dashboard/summary?uid=${uid}`);
       if (res.ok) setSummary(await res.json());
 
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-      const userId = userData.user.id;
-
       const [{ data: myPosts }, { data: myDeals }] = await Promise.all([
-        supabase.from('posts').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(10),
-        supabase.from('deals').select('*').or(`helper_user_id.eq.${userId},requester_user_id.eq.${userId}`).order('closed_at', { ascending: false }).limit(10),
+        supabase.from('posts').select('*').eq('user_id', uid).order('created_at', { ascending: false }).limit(10),
+        supabase.from('deals').select('*').or(`helper_user_id.eq.${uid},requester_user_id.eq.${uid}`).order('closed_at', { ascending: false }).limit(10),
       ]);
 
       setPosts(myPosts || []);

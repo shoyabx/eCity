@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
+import { getFirebaseAuth } from "@/lib/firebase";
 
 export default function OfferHelp() {
   const router = useRouter();
@@ -23,8 +24,7 @@ export default function OfferHelp() {
     e.preventDefault();
     setSubmitting(true);
 
-    const { data: userData } = await supabase.auth.getUser();
-    const userId = userData.user?.id;
+    const userId = getFirebaseAuth().currentUser?.uid;
     if (!userId) {
       setSubmitting(false);
       router.push('/login');

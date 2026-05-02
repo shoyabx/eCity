@@ -1,94 +1,44 @@
 "use client";
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { supabase, getCurrentUser, signOut as supabaseSignOut } from '@/lib/supabase';
-import { User, Session } from '@supabase/supabase-js';
+import { User, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
+import { getFirebaseAuth } from '@/lib/firebase';
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
   loading: boolean;
   signOut: () => Promise<void>;
-  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshUser = async () => {
-    try {
-      const { user: currentUser } = await getCurrentUser();
-      setUser(currentUser);
-    } catch (error) {
-      console.error('Error refreshing user:', error);
-    }
-  };
-
   useEffect(() => {
-    // Check for existing session on mount
-    const initializeAuth = async () => {
-      try {
-        const { data: { session: currentSession } } = await supabase.auth.getSession();
-        setSession(currentSession);
-        
-        if (currentSession) {
-          const { user: currentUser } = await getCurrentUser();
-          setUser(currentUser);
-        }
-      } catch (error) {
-        console.error('Error initializing auth:', error);
-      } finally {
+    let unsub = () => {};
+    try {
+      const auth = getFirebaseAuth();
+      unsub = onAuthStateChanged(auth, (u) => {
+        setUser(u);
         setLoading(false);
-      }
-    };
-
-    initializeAuth();
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, currentSession) => {
-        setSession(currentSession);
-        if (currentSession) {
-          const { user: currentUser } = await getCurrentUser();
-          setUser(currentUser);
-        } else {
-          setUser(null);
-        }
-        setLoading(false);
-      }
-    );
-
-    return () => {
-      subscription.unsubscribe();
-    };
+      });
+    } catch {
+      setLoading(false);
+    }
+    return () => unsub();
   }, []);
 
   const signOut = async () => {
-    try {
-      const { error } = await supabaseSignOut();
-      if (error) throw error;
-      setUser(null);
-      setSession(null);
-    } catch (error) {
-      console.error('Error signing out:', error);
-      throw error;
-    }
+    const auth = getFirebaseAuth();
+    await firebaseSignOut(auth);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, session, loading, signOut, refreshUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, loading, signOut }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 }
