@@ -37,7 +37,7 @@ insert into auth.users (
 ) values (
   gen_random_uuid(),
   '00000000-0000-0000-0000-000000000000',
-  'adil@ecity.local',
+  'adil@ecity.in',
   crypt('Shoyab@8010', gen_salt('bf')),
   now(),
   '{"provider":"email","providers":["email"]}',
@@ -48,16 +48,16 @@ insert into auth.users (
 
 -- Step 3: Create the profile record
 with new_user as (
-  select id from auth.users where email = 'adil@ecity.local'
+  select id from auth.users where email = 'adil@ecity.in'
 )
 insert into profiles (id, username, mobile, email, created_at)
-select id, 'adil', '8010876742', 'adil@ecity.local', now()
+select id, 'adil', '8010876742', 'adil@ecity.in', now()
 from new_user;
 
 -- Step 4: Verify
 select * from profiles where username = 'adil';
-select email from auth.users where email = 'adil@ecity.local';
+select email from auth.users where email = 'adil@ecity.in';
 
 -- Cleanup if needed:
 -- delete from profiles where username = 'adil';
--- delete from auth.users where email = 'adil@ecity.local';
+-- delete from auth.users where email = 'adil@ecity.in';

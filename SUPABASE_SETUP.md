@@ -52,7 +52,7 @@ In Supabase Dashboard:
 
 - Username: `adil`
 - Mobile: `8010876742`
-- Email: auto-generated as `adil@ecity.local` (if not provided)
+- Email: auto-generated as `adil@ecity.in` (if not provided)
 - Password: `Shoyab@8010`
 
 ## Implementation Details
